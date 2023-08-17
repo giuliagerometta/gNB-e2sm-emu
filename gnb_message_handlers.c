@@ -5,6 +5,7 @@
 #include "gnb_message_handlers.h"
 #include <stdbool.h>
 #define CONNECTED_UES 4
+#define ALLOCATED_PRBs 8
 
 int gnb_id = 0;
 bool is_initialized = false;
@@ -274,26 +275,26 @@ UeListM* build_ue_list_message(){
         // read mesures and add to message (actually just send random data)
 
         // measures
-        ue_info_list[i]->has_meas_type_1 = 1;
-        ue_info_list[i]->meas_type_1 = rand();
-        ue_info_list[i]->has_meas_type_2 = 1;
-        ue_info_list[i]->meas_type_2 = rand();
-        ue_info_list[i]->has_meas_type_3 = 1;
-        ue_info_list[i]->meas_type_3 = rand();
+        ue_info_list[i]->has_ue_rsrp = 1;
+        ue_info_list[i]->ue_rsrp = rand();
+        ue_info_list[i]->has_ue_ber = 1;
+        ue_info_list[i]->ue_ber = rand();
+        ue_info_list[i]->has_ue_mcs = 1;
+        ue_info_list[i]->ue_mcs = rand();
 
         // properties
-        ue_info_list[i]->has_prop_1 = 1;
+        /* ue_info_list[i]->has_prop_1 = 1;
         ue_info_list[i]->prop_1 = connected_ue_list[i].prop_1;
         if(connected_ue_list[i].prop_2 > -1){
             ue_info_list[i]->has_prop_2 = 1;
             ue_info_list[i]->prop_2 = connected_ue_list[i].prop_2;
         }
-
+ */
 
     }
     // add a null terminator to the list
     ue_info_list[CONNECTED_UES] = NULL;
-    // assgin ue info pointer to actually fill the field
+    // assign ue info pointer to actually fill the field
     ue_list_m->ue_info = ue_info_list;
     return ue_list_m;
 }
@@ -324,6 +325,10 @@ void ran_read(RANParameter ran_par_enum, RANParamMapEntry* map_entry){
         case RAN_PARAMETER__UE_LIST:
             map_entry->value_case=RAN_PARAM_MAP_ENTRY__VALUE_UE_LIST;
             map_entry->ue_list = build_ue_list_message();
+            break;
+        case RAN_PARAMETER__CELL_LOAD:
+            map_entry->value_case=RAN_PARAM_MAP_ENTRY__VALUE_INT64_VALUE;
+            map_entry->int64_value = ALLOCATED_PRBs; //number of allocated PRBs
             break;
         default:
             printf("Unrecognized param %d\n",ran_par_enum);
