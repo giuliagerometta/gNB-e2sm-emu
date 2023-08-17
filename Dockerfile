@@ -16,7 +16,7 @@ RUN chmod +x submodule-sync.sh
 RUN ./submodule-sync.sh
 
 # build submodules
-RUN chmod +x oai-oran-protolib /compile_definitions.sh
+RUN chmod +x oai-oran-protolib/compile_definitions.sh
 RUN ./oai-oran-protolib/compile_definitions.sh
 
 # build the emulator
