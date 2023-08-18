@@ -11,8 +11,8 @@ int gnb_id = 0;
 bool is_initialized = false;
 typedef struct {
     int rnti;
-    bool prop_1;
-    float prop_2;
+    //bool prop_1;
+    //float prop_2;
 } ue_struct;
 ue_struct connected_ue_list[CONNECTED_UES];
 
@@ -24,8 +24,8 @@ void initialize_ues_if_needed(){
         return;
     for (int ue=0;ue<CONNECTED_UES;ue++){
         connected_ue_list[ue].rnti = rand();
-        connected_ue_list[ue].prop_1 = false;
-        connected_ue_list[ue].prop_2 = -1;
+        //connected_ue_list[ue].prop_1 = false;
+        //connected_ue_list[ue].prop_2 = -1;
     }
     is_initialized = true;
 }
@@ -175,23 +175,21 @@ void apply_properties_to_ue_list(UeListM* ue_list){
     // loop the ues and apply what needed to each, according to what is inside the list received from the xapp
     for(int ue=0; ue<ue_list->n_ue_info; ue++){
         // apply generic properties (example)
-        set_ue_properties(ue_list->ue_info[ue]->rnti,
-                          ue_list->ue_info[ue]->prop_1,
-                          ue_list->ue_info[ue]->prop_2);
+        set_ue_properties(ue_list->ue_info[ue]->rnti); //ue_list->ue_info[ue]->prop_1, ue_list->ue_info[ue]->prop_2
 
         // more stuff later when needed     
     }
 }
 
-void set_ue_properties(int rnti, bool prop_1, float prop_2){
+void set_ue_properties(int rnti){ //, bool prop_1, float prop_2
 
     // iterate ue list until rnti is found
     bool rnti_not_found = true;
     for(int ue=0; ue<CONNECTED_UES; ue++) {
         if(connected_ue_list[ue].rnti == rnti){
             printf("RNTI found\n");
-            connected_ue_list[ue].prop_1 = prop_1;
-            connected_ue_list[ue].prop_2 = prop_2;
+            //connected_ue_list[ue].prop_1 = prop_1;
+            //connected_ue_list[ue].prop_2 = prop_2;
             rnti_not_found = false;
             break;
         } else {
@@ -326,10 +324,10 @@ void ran_read(RANParameter ran_par_enum, RANParamMapEntry* map_entry){
             map_entry->value_case=RAN_PARAM_MAP_ENTRY__VALUE_UE_LIST;
             map_entry->ue_list = build_ue_list_message();
             break;
-        case RAN_PARAMETER__CELL_LOAD:
+        /* case RAN_PARAMETER__CELL_LOAD:
             map_entry->value_case=RAN_PARAM_MAP_ENTRY__VALUE_INT64_VALUE;
             map_entry->int64_value = ALLOCATED_PRBs; //number of allocated PRBs
-            break;
+            break; */
         default:
             printf("Unrecognized param %d\n",ran_par_enum);
             assert(0!=0);
