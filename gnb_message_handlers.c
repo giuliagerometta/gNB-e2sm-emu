@@ -254,6 +254,7 @@ UeListM* build_ue_list_message(){
     // insert n ues
     ue_list_m->connected_ues = CONNECTED_UES;
     ue_list_m->n_ue_info = CONNECTED_UES;
+    ue_list_m->allocated_prbs = ALLOCATED_PRBs;
 
     // if no ues are connected then we can stop and just return the message
     if(CONNECTED_UES == 0){
