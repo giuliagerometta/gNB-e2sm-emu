@@ -276,10 +276,14 @@ UeListM* build_ue_list_message(){
         // measures
         ue_info_list[i]->has_ue_rsrp = 1;
         ue_info_list[i]->ue_rsrp = rand();
-        ue_info_list[i]->has_ue_ber = 1;
-        ue_info_list[i]->ue_ber = rand();
-        ue_info_list[i]->has_ue_mcs = 1;
-        ue_info_list[i]->ue_mcs = rand();
+        ue_info_list[i]->has_ue_ber_up = 1;
+        ue_info_list[i]->ue_ber_up = rand();
+        ue_info_list[i]->has_ue_ber_down = 1;
+        ue_info_list[i]->ue_ber_down = rand();
+        ue_info_list[i]->has_ue_mcs_up = 1;
+        ue_info_list[i]->ue_mcs_up = rand();
+        ue_info_list[i]->has_ue_mcs_down = 1;
+        ue_info_list[i]->ue_mcs_down = rand();
 
         // properties
         /* ue_info_list[i]->has_prop_1 = 1;
