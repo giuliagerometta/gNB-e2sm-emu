@@ -4,8 +4,10 @@
 
 #include "gnb_message_handlers.h"
 #include <stdbool.h>
+
 #define CONNECTED_UES 4
 #define ALLOCATED_PRBs 8
+#define TOTAL_PRBs CONNECTED_UES*8
 
 int gnb_id = 0;
 bool is_initialized = false;
@@ -255,6 +257,7 @@ UeListM* build_ue_list_message(){
     ue_list_m->connected_ues = CONNECTED_UES;
     ue_list_m->n_ue_info = CONNECTED_UES;
     ue_list_m->allocated_prbs = ALLOCATED_PRBs;
+    ue_list_m->total_prbs = TOTAL_PRBs;
 
     // if no ues are connected then we can stop and just return the message
     if(CONNECTED_UES == 0){
@@ -284,6 +287,8 @@ UeListM* build_ue_list_message(){
         ue_info_list[i]->ue_mcs_up = rand();
         ue_info_list[i]->has_ue_mcs_down = 1;
         ue_info_list[i]->ue_mcs_down = rand();
+
+        ue_info_list[i]->cell_load = ue_list_m->allocated_prbs/ue_list_m->total_prbs;
 
         // properties
         /* ue_info_list[i]->has_prop_1 = 1;
