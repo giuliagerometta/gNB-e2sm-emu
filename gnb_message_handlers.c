@@ -287,7 +287,7 @@ UeListM* build_ue_list_message(){
         ue_info_list[i]->ue_mcs_up = rand();
         ue_info_list[i]->has_ue_mcs_down = 1;
         ue_info_list[i]->ue_mcs_down = rand();
-
+        ue_info_list[i]->has_cell_load = 1;
         ue_info_list[i]->cell_load = ue_list_m->allocated_prbs/ue_list_m->total_prbs;
 
         // properties
